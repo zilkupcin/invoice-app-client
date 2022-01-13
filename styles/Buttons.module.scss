@@ -1,0 +1,18 @@
+@import './variables.scss';
+
+.newInvoiceBtn {
+    display: flex;
+    align-items: center;
+    padding: 8px 24px 8px 8px;
+    background-color: $accent-primary-lighter;
+    border-radius: 50px;
+    color: #fff;
+
+    img {
+        padding: 12px;
+        background-color: #fff;
+        border-radius: 50%;
+        width: 12px;
+        margin-right: 12px;
+    }
+}
