@@ -1,18 +1,54 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 .newInvoiceBtn {
-    display: flex;
-    align-items: center;
-    padding: 8px 24px 8px 8px;
-    background-color: $accent-primary-lighter;
-    border-radius: 50px;
-    color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 8px 24px 8px 8px;
+  background-color: $accent-primary-lighter;
+  border-radius: 50px;
+  color: #fff;
 
-    img {
-        padding: 12px;
-        background-color: #fff;
-        border-radius: 50%;
-        width: 12px;
-        margin-right: 12px;
+  img {
+    padding: 12px;
+    background-color: #fff;
+    border-radius: 50%;
+    width: 12px;
+    margin-right: 12px;
+  }
+}
+
+.button {
+  padding: 12px 24px;
+  color: white;
+  border-radius: 24px;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &.button--primary {
+    background-color: $accent-primary;
+
+    &:hover {
+      background-color: $accent-primary-lighter;
     }
+  }
+
+  &.button--secondary {
+    background-color: $accent-secondary;
+
+    &:hover {
+      background-color: $accent-secondary-lighter;
+    }
+  }
+
+  &.button--tertiary {
+    background-color: #f9fafe;
+    color: $light-three;
+
+    &:hover {
+      color: white;
+      background-color: #252945;
+    }
+  }
 }
