@@ -1,18 +1,21 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import { useRouter } from 'next/router'
-
+import type { NextPage } from "next";
+import styles from "../../styles/InvoiceDetails.module.scss";
+import { useRouter } from "next/router";
+import GoBack from "../../components/GoBack";
+import InvoiceInfo from "../../components/InvoiceDetails";
+import Modal from "../../components/Modal";
 
 const Invoice: NextPage = () => {
-  const router = useRouter()
+  const router = useRouter();
   const { invoiceId } = router.query;
 
-
   return (
-   <div>{invoiceId}</div>
-  )
-}
+    <div className={styles.pageContainer}>
+      <GoBack />
+      <InvoiceInfo />
+      {/* <Modal /> */}
+    </div>
+  );
+};
 
 export default Invoice;
