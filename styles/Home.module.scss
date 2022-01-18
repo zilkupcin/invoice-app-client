@@ -7,6 +7,8 @@
 }
 
 .content {
+  display: flex;
+  flex-direction: column;
   padding: 24px;
   flex: 1;
 }
@@ -14,11 +16,18 @@
 .homeHeader {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 24px;
 
   .headerLeft {
-  
+    h1 {
+      font-size: 18px;
+    }
+
+    span {
+      color: $light-three;
+    }
   }
-  
+
   .headerRight {
     display: flex;
     align-items: center;
