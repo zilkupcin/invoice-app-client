@@ -1,0 +1,92 @@
+@import "./variables.scss";
+
+.invoiceList {
+}
+
+.invoice {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 12px;
+  row-gap: 24px;
+  margin-bottom: 12px;
+  padding: 24px;
+  background-color: white;
+  box-shadow: $box-shadow;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .invoiceId {
+    text-transform: uppercase;
+    font-weight: 700;
+
+    span {
+      font-weight: 500;
+      color: $light-three;
+    }
+  }
+
+  .name {
+    color: $light-three;
+  }
+
+  .priceContainer {
+    display: flex;
+    flex-direction: column;
+
+    .date {
+      color: $light-three;
+      margin-bottom: 8px;
+    }
+
+    .price {
+      font-size: 14px;
+      font-weight: 700;
+    }
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    border-radius: 6px;
+    padding: 12px;
+
+    &::before {
+      content: "";
+      margin-right: 8px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+  }
+
+  .pending {
+    background-color: #ff8f001a;
+    color: #ff8f00;
+
+    &::before {
+      background-color: #ff8f00;
+    }
+  }
+
+  .paid {
+    background-color: #33d69f24;
+    color: #33d69f;
+
+    &::before {
+      background-color: #33d69f;
+    }
+  }
+
+  .draft {
+    color: $dark-four;
+    background-color: $light-one;
+
+    &::before {
+      background-color: $dark-four;
+    }
+  }
+}
