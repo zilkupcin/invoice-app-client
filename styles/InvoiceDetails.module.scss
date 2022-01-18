@@ -1,0 +1,225 @@
+@import "./variables.scss";
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  .header {
+    padding: 24px;
+    box-shadow: $box-shadow;
+    background-color: white;
+    border-radius: 6px;
+    margin-bottom: 24px;
+
+    .statusContainer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .statusLabel {
+        color: $light-three;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .details {
+    padding: 24px;
+    background-color: white;
+    box-shadow: $box-shadow;
+    border-radius: 6px;
+
+    .detailsTop {
+      color: $light-three;
+      margin-bottom: 32px;
+
+      .summary {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 24px;
+
+        .id {
+          font-weight: 700;
+          font-size: 14px;
+          color: black;
+          margin-bottom: 4px;
+
+          span {
+            color: $light-three;
+          }
+        }
+
+        .type {
+          font-size: 14px;
+        }
+      }
+
+      .address {
+        font-size: 12px;
+        margin-bottom: 24px;
+      }
+    }
+
+    .detailsMiddle {
+      margin-bottom: 32px;
+
+      .detailGroups {
+        display: grid;
+        grid-template-areas:
+          "date to"
+          "payment to"
+          "receiver receiver";
+        row-gap: 24px;
+        column-gap: 12px;
+        margin-bottom: 32px;
+
+        .detailsGroup {
+          display: flex;
+          flex-direction: column;
+
+          &.detailsGroup--invoice-date {
+            grid-area: date;
+          }
+
+          &.detailsGroup--bill-to {
+            grid-area: to;
+          }
+
+          &.detailsGroup--payment-due {
+            grid-area: payment;
+          }
+
+          &.detailsGroup--sent-to {
+            grid-area: receiver;
+          }
+
+          .groupLabel {
+            margin-bottom: 12px;
+            color: $light-three;
+            font-size: 12px;
+          }
+
+          .groupValue {
+            font-weight: 700;
+            font-size: 18px;
+          }
+        }
+      }
+
+      .itemSummary {
+        background-color: #f9fafe;
+        border-radius: 6px;
+        overflow: hidden;
+
+        .item {
+          display: grid;
+          grid-template-areas:
+            "name name total"
+            "count cost total";
+          padding: 24px;
+          font-weight: 700;
+
+          .itemName {
+            grid-area: name;
+            font-size: 12px;
+            margin-bottom: 8px;
+          }
+
+          .itemCount {
+            grid-area: count;
+            color: $light-three;
+          }
+
+          .itemCost {
+            grid-area: cost;
+            color: $light-three;
+          }
+
+          .itemTotal {
+            grid-area: total;
+            align-self: center;
+          }
+        }
+
+        .totalContainer {
+          display: flex;
+          justify-content: space-between;
+          background-color: $dark-four;
+          padding: 24px;
+          color: white;
+          margin-top: 24px;
+
+          .totalLabel {
+          }
+
+          .totalValue {
+            font-size: 16px;
+            font-weight: 700;
+          }
+        }
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 24px;
+    background-color: white;
+  }
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 12px;
+
+  &::before {
+    content: "";
+    margin-right: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+}
+
+.pending {
+  background-color: #ff8f001a;
+  color: #ff8f00;
+
+  &::before {
+    background-color: #ff8f00;
+  }
+}
+
+.paid {
+  background-color: #33d69f24;
+  color: #33d69f;
+
+  &::before {
+    background-color: #33d69f;
+  }
+}
+
+.draft {
+  color: $dark-four;
+  background-color: $light-one;
+
+  &::before {
+    background-color: $dark-four;
+  }
+}
