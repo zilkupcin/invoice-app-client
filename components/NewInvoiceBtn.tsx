@@ -1,12 +1,12 @@
 import Image from "next/image";
 import styles from "../styles/Buttons.module.scss";
 
-const NewInvoiceBtn = () => {
+const NewInvoiceBtn = ({ onClick }) => {
   return (
-    <div className={styles.newInvoiceBtn}>
+    <button onClick={onClick} className={styles.newInvoiceBtn}>
       <img src="/plus.svg"></img>
       New
-    </div>
+    </button>
   );
 };
 
