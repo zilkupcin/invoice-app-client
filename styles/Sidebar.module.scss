@@ -1,72 +1,72 @@
 @import "./variables.scss";
 
 .sidebar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  background-color: $dark-four;
+  overflow: hidden;
+  padding-right: 24px;
+  box-sizing: border-box;
+}
+
+.sidebarLogo {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $accent-primary;
+  padding: 24px;
+  overflow: hidden;
+  border-bottom-right-radius: 18px;
+  border-top-right-radius: 18px;
+
+  &::after {
+    position: absolute;
+    content: "";
+    background-color: $accent-primary-lighter;
     width: 100%;
-    background-color: $dark-three;
-    overflow: hidden;
-    padding-right: 24px;
-    box-sizing: border-box;
-  }
-  
-  .sidebarLogo {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: $accent-primary;
-    padding: 32px;
-    overflow: hidden;
-    border-bottom-right-radius: 18px;
-    border-top-right-radius: 18px;
-  
-    &::after {
-      position: absolute;
-      content: '';
-      background-color: $accent-primary-lighter;
-      width: 100%;
-      height: 100px;
-      top: 50%;
-      border-top-left-radius: 18px;
-    }
-  
-    img {
-      position: relative;
-      z-index: 20;
-    }
-  }
-  
-  .sidebarBottom {
-      display: flex;
-      align-items: center;
-  }
-  
-  .sidebarDivider {
-    height: 100%;
-    width: 1px;
-    background-color: #494E6E;
-    margin: 0 24px;
+    height: 100px;
+    top: 50%;
+    border-top-left-radius: 18px;
   }
 
-  @media only screen and (min-width: 1024px) {
-    .sidebar {
-      flex-direction: column;
-      width: 100px;
-      padding-right: 0;
-      padding-bottom: 24px;
-      border-top-right-radius: 18px;
-      border-bottom-right-radius: 18px;
-    }
-  
-    .sidebarBottom {
-      flex-direction: column;
-    }
-  
-    .sidebarDivider {
-      height: 1px;
-      width: 100px;
-      margin: 24px 0;
-    }
+  img {
+    position: relative;
+    z-index: 20;
   }
+}
+
+.sidebarBottom {
+  display: flex;
+  align-items: center;
+}
+
+.sidebarDivider {
+  height: 100%;
+  width: 1px;
+  background-color: #494e6e;
+  margin: 0 24px;
+}
+
+@media only screen and (min-width: 1024px) {
+  .sidebar {
+    flex-direction: column;
+    width: 90px;
+    padding-right: 0;
+    padding-bottom: 24px;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+  }
+
+  .sidebarBottom {
+    flex-direction: column;
+  }
+
+  .sidebarDivider {
+    height: 1px;
+    width: 90px;
+    margin: 24px 0;
+  }
+}
