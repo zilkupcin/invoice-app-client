@@ -1,6 +1,7 @@
 @import "./variables.scss";
 
 .pageContainer {
+  position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -28,6 +29,32 @@
         font-size: 14px;
       }
     }
+
+    .actions {
+      display: none;
+    }
+
+    @media only screen and (min-width: 768px) {
+      display: flex;
+      justify-content: space-between;
+
+      .statusContainer {
+        justify-content: flex-start;
+
+        .statusLabel {
+          margin-right: 24px;
+        }
+
+        .status {
+          padding: 12px 24px;
+        }
+      }
+
+      .actions {
+        display: flex;
+        column-gap: 12px;
+      }
+    }
   }
 
   .details {
@@ -49,7 +76,7 @@
           font-weight: 700;
           font-size: 14px;
           color: black;
-          margin-bottom: 4px;
+          margin-bottom: 12px;
 
           span {
             color: $light-three;
@@ -64,6 +91,15 @@
       .address {
         font-size: 12px;
         margin-bottom: 24px;
+
+        span {
+          display: block;
+          margin-bottom: 4px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
       }
     }
 
@@ -118,6 +154,10 @@
         border-radius: 6px;
         overflow: hidden;
 
+        .summaryHeaders {
+          display: none;
+        }
+
         .item {
           display: grid;
           grid-template-areas:
@@ -164,19 +204,58 @@
             font-weight: 700;
           }
         }
+
+        .itemListEmpty {
+          text-align: center;
+          font-size: 14px;
+          color: $light-three;
+          margin: 24px 24px 0 24px;
+        }
       }
     }
-  }
 
-  .footer {
-    display: flex;
-    justify-content: space-between;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    padding: 24px;
-    background-color: white;
+    @media only screen and (min-width: 768px) {
+      padding: 42px;
+
+      .detailsTop {
+        display: flex;
+        justify-content: space-between;
+
+        .address {
+          text-align: right;
+        }
+      }
+
+      .detailsMiddle {
+        .detailGroups {
+          grid-template-areas:
+            "date to receiver receiver"
+            "payment to receiver receiver";
+        }
+
+        .itemSummary {
+          .summaryHeaders {
+            padding: 24px 24px 0 24px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            color: $light-three;
+          }
+
+          .item {
+            grid-template-areas: none;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            align-items: center;
+
+            .itemName,
+            .itemCount,
+            .itemCost,
+            .itemTotal {
+              grid-area: unset;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -221,5 +300,35 @@
 
   &::before {
     background-color: $dark-four;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 24px;
+  column-gap: 4px;
+  background-color: white;
+
+  @media only screen and (min-width: 375px) {
+    * {
+      flex-grow: 1;
+    }
+  }
+
+  @media only screen and (min-width: 480px) {
+    display: flex;
+    justify-content: center;
+    > * {
+      max-width: 140px;
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+    display: none;
   }
 }

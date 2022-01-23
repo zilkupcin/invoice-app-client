@@ -11,6 +11,13 @@
   flex-direction: column;
   padding: 24px;
   flex: 1;
+
+  @media only screen and (min-width: 768px) {
+    max-width: 730px;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
 }
 
 .homeHeader {
@@ -31,6 +38,23 @@
   .headerRight {
     display: flex;
     align-items: center;
+  }
+
+  @media only screen and (min-width: 375px) {
+    .headerLeft {
+      h1 {
+        font-size: 20px;
+      }
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+    .headerLeft {
+      h1 {
+        font-size: 32px;
+        margin-bottom: 12px;
+      }
+    }
   }
 }
 

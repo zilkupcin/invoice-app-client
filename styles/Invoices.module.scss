@@ -8,10 +8,11 @@
   grid-template-columns: repeat(2, 1fr);
   column-gap: 12px;
   row-gap: 24px;
-  margin-bottom: 12px;
+  margin-bottom: 18px;
   padding: 24px;
   background-color: white;
   box-shadow: $box-shadow;
+  border-radius: 8px;
 
   &:last-child {
     margin-bottom: 0;
@@ -25,6 +26,10 @@
       font-weight: 500;
       color: $light-three;
     }
+  }
+
+  .arrow {
+    display: none;
   }
 
   .name {
@@ -53,6 +58,7 @@
     font-weight: 700;
     border-radius: 6px;
     padding: 12px;
+    align-self: center;
 
     &::before {
       content: "";
@@ -87,6 +93,33 @@
 
     &::before {
       background-color: $dark-four;
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .arrow {
+      display: block;
+      width: 8px;
+    }
+
+    .name {
+    }
+
+    .priceContainer {
+      flex-direction: row;
+
+      .date,
+      .price {
+        margin-bottom: 0;
+      }
+
+      .date {
+        margin-right: 32px;
+      }
     }
   }
 }

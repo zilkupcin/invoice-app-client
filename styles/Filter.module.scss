@@ -21,6 +21,8 @@
 .filterList {
   position: absolute;
   top: calc(100% + 30px);
+  left: 50%;
+  transform: translateX(-50%);
   background: #ffffff;
   box-shadow: 0px 10px 20px rgba(72, 84, 159, 0.25);
   border-radius: 8px;
@@ -57,4 +59,19 @@
   width: 10px;
   height: 10px;
   transition: all 0.2s ease-in-out;
+
+  &.checkbox--selected {
+    background-color: $accent-primary;
+    border: 2px solid $accent-primary;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .filters {
+    margin-right: 24px;
+
+    .filterHeader {
+      font-size: 14px;
+    }
+  }
 }
