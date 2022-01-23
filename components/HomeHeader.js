@@ -3,16 +3,25 @@ import Filter from "./Filter";
 import NewInvoiceBtn from "./NewInvoiceBtn";
 import filters from "../data/filters";
 
-const HomeHeader = () => {
+const HomeHeader = ({
+  numOfInvoices,
+  selectedFilter,
+  onNewInvoiceClick,
+  onFilterClick,
+}) => {
   return (
     <div className={styles.homeHeader}>
       <div className={styles.headerLeft}>
         <h1>Invoices</h1>
-        <span>7 Invoices</span>
+        <span>{numOfInvoices} Invoices</span>
       </div>
       <div className={styles.headerRight}>
-        {/* <Filter filters={filters}></Filter> */}
-        <NewInvoiceBtn></NewInvoiceBtn>
+        <Filter
+          onFilterClick={onFilterClick}
+          filters={filters}
+          selectedFilter={selectedFilter}
+        ></Filter>
+        <NewInvoiceBtn onClick={onNewInvoiceClick}></NewInvoiceBtn>
       </div>
     </div>
   );
