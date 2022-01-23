@@ -1,0 +1,48 @@
+@import "./variables.scss";
+
+.container {
+  position: absolute;
+  top: calc(100% + 32px);
+  left: 0;
+  right: 0;
+  padding: 24px;
+  background-color: white;
+  box-shadow: $box-shadow-strong;
+  z-index: 50;
+  border-radius: 8px;
+
+  .calendarHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 32px;
+
+    img {
+      width: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .date {
+      font-weight: 700;
+    }
+  }
+
+  .dayList {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    row-gap: 24px;
+    column-gap: 24px;
+
+    .day {
+      font-weight: 700;
+      font-size: 12px;
+      transition: all 0.2s ease-in-out;
+      margin: 0 auto;
+
+      &:hover {
+        color: $accent-primary;
+        cursor: pointer;
+      }
+    }
+  }
+}
