@@ -1,0 +1,165 @@
+@import "./variables.scss";
+
+.container {
+  position: absolute;
+  left: -24px;
+  right: -24px;
+  top: -24px;
+  background-color: white;
+  padding: 24px;
+  padding-bottom: 120px;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .title {
+    margin-bottom: 24px;
+
+    span {
+      color: $light-three;
+      span {
+        color: #000;
+      }
+    }
+  }
+
+  .groupLabel {
+    display: block;
+    color: $accent-primary;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 24px;
+    margin-top: 32px;
+  }
+
+  .fieldGroupSmall {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 24px;
+    row-gap: 24px;
+  }
+
+  .fieldGroupLarge {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 12px;
+
+    * {
+      flex-basis: calc(50% - 6px);
+      flex-grow: 1;
+    }
+  }
+
+  .formFooter {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    box-shadow: $box-shadow-strong;
+    padding: 24px;
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 12px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    position: fixed;
+    right: unset;
+    width: 640px;
+    box-sizing: border-box;
+    top: 80px;
+    bottom: 0;
+    left: 0;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    z-index: 200;
+    padding: 48px;
+
+    .fieldGroupLarge {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .formFooter {
+      left: 90px;
+      width: 640px;
+      box-sizing: border-box;
+      border-bottom-right-radius: 20px;
+    }
+  }
+
+  @media only screen and (min-width: 1024px) {
+    top: 0;
+    left: 90px;
+  }
+}
+
+.itemListHeading {
+  font-size: 20px;
+  color: #777f98;
+  font-weight: 700;
+  margin-bottom: 24px;
+  margin-top: 48px;
+}
+
+.newItemBtn {
+  background-color: #f9fafe;
+  border-radius: 48px;
+  padding: 16px 24px;
+  width: 100%;
+  transition: all 0.2s ease-in-out;
+  font-weight: 700;
+  color: $accent-primary-light;
+  cursor: pointer;
+  margin-bottom: 24px;
+
+  &:hover {
+    background-color: $light-two;
+  }
+}
+
+.validationError {
+  color: $accent-secondary;
+  font-weight: 700;
+}
+
+.itemList {
+  .item {
+    margin-bottom: 24px;
+    .itemFieldGroup {
+      display: grid;
+      column-gap: 12px;
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: 24px;
+    }
+
+    .itemTotal {
+      color: $light-three;
+
+      label {
+        display: block;
+        margin-bottom: 24px;
+      }
+
+      span {
+        font-weight: 700;
+      }
+    }
+
+    button {
+      cursor: pointer;
+      background-color: transparent;
+    }
+  }
+}
+
+@keyframes slide-in {
+  0% {
+  }
+}
