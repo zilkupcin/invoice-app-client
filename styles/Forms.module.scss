@@ -1,0 +1,102 @@
+@import "./variables.scss";
+
+.container {
+  margin-bottom: 24px;
+  label {
+    display: block;
+    color: $accent-primary-light;
+    margin-bottom: 12px;
+  }
+
+  &.container input {
+    width: 100%;
+    border: 1px solid $light-two;
+    border-radius: 4px;
+    padding: 12px;
+    font-weight: 700;
+    box-sizing: border-box;
+  }
+
+  .dropdown {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    border: 1px solid $light-two;
+    padding: 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+
+    &.dropdown--open {
+      border-color: $accent-primary;
+      img {
+        transform: rotate(0deg);
+      }
+    }
+
+    .selectedOption {
+      font-weight: 700;
+    }
+
+    img {
+      transform: rotate(180deg);
+      transition: all 0.2s ease-in-out;
+      user-select: none;
+    }
+
+    .options {
+      background-color: white;
+      box-shadow: $box-shadow-strong;
+      position: absolute;
+      top: calc(100% + 24px);
+      right: 0;
+      left: 0;
+      border-radius: 8px;
+
+      .option {
+        font-weight: 700;
+        font-size: 14px;
+        padding: 18px;
+        border-bottom: 1px solid $light-two;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          color: $accent-primary;
+        }
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  .calendarDropdown {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    border: 1px solid $light-two;
+    padding: 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+
+    .dropdownIcon {
+      width: 16px;
+      user-select: none;
+    }
+
+    &.calendarDropdown--open {
+      border-color: $accent-primary;
+    }
+
+    &.calendarDropdown--not-relative {
+      position: static;
+    }
+
+    .selectedOption {
+      font-weight: 700;
+      user-select: none;
+    }
+  }
+}
