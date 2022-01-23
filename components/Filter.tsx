@@ -1,19 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import FilterItem from "./FilterItem";
 import styles from "../styles/Filter.module.scss";
 
-const Filter = ({ filters }) => {
+const Filter = ({ filters, onFilterClick, selectedFilter }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleDropdownClick = () => {
+    setIsOpen(!isOpen);
+  };
   return (
-    <div className={styles.filters}>
+    <div className={styles.filters} onClick={handleDropdownClick}>
       <div className={styles.filterHeader}>
         Filter
         <img src="./arrow.svg" />
       </div>
-      <ul className={styles.filterList}>
-        {filters.map((filter) => {
-          return <FilterItem filter={filter} />;
-        })}
-      </ul>
+      {isOpen && (
+        <ul className={styles.filterList}>
+          {filters.map((filter) => {
+            return (
+              <FilterItem
+                onFilterClick={onFilterClick}
+                filter={filter}
+                selected={filter === selectedFilter}
+              />
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 };
