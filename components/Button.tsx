@@ -1,13 +1,23 @@
 import styles from "../styles/Buttons.module.scss";
 import cn from "classnames";
+import Loader from "./Loader";
+import { FC, MouseEventHandler } from "react";
 
-const Button = ({ type, title, onClick }) => {
+interface ButtonProps {
+  type: String;
+  title: String;
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  isLoading?: boolean;
+}
+
+const Button: FC<ButtonProps> = ({ type, title, onClick, isLoading }) => {
   return (
     <button
       onClick={onClick}
       className={cn(styles.button, { [styles[`button--${type}`]]: true })}
+      disabled={isLoading}
     >
-      {title}
+      {isLoading ? <Loader /> : title}
     </button>
   );
 };
