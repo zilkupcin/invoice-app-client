@@ -1,27 +1,39 @@
-import { useState } from "react";
+import { FC, MouseEvent, MouseEventHandler, useState } from "react";
 import styles from "../styles/Forms.module.scss";
 import cn from "classnames";
 import Calendar from "./Calendar";
+import { ValidationErrorItem } from "joi";
 
-const CalendarDropdown = ({
-  relativeSelf,
+interface CalendarDropdownProps {
+  relativeSelf?: boolean;
+  onInputChange: (propertyName: string, newDate: Date) => void;
+  propertyName: string;
+  value: Date;
+  errors: Array<ValidationErrorItem>;
+}
+
+const CalendarDropdown: FC<CalendarDropdownProps> = ({
+  relativeSelf = false,
   onInputChange,
   propertyName,
   value,
+  errors,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [date, setDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(value);
 
-  const handleDropdownClick = (e) => {
+  const handleDropdownClick: MouseEventHandler<HTMLDivElement> = (
+    e: MouseEvent
+  ) => {
+    const target = e.target as HTMLDivElement;
     if (
-      !e.target.classList.contains(styles.dropdownIcon) &&
-      !e.target.classList.contains(styles.calendarDropdown) &&
-      !e.target.classList.contains(styles.selectedOption)
+      !target.classList.contains(styles.dropdownIcon) &&
+      !target.classList.contains(styles.calendarDropdown) &&
+      !target.classList.contains(styles.selectedOption)
     )
       return;
 
-    console.log(styles.calendarDropdown);
     setIsOpen(!isOpen);
   };
 
@@ -37,7 +49,7 @@ const CalendarDropdown = ({
     setDate(newDate);
   };
 
-  const handleDaySelect = (day) => {
+  const handleDaySelect = (day: number) => {
     let newDate = new Date(date);
     newDate.setDate(day);
     newDate = new Date(newDate);
@@ -76,15 +88,14 @@ const CalendarDropdown = ({
       >
         <span className={styles.selectedOption}>{getShortSelectedDate()}</span>
         <img className={styles.dropdownIcon} src="/calendar.svg" />
-        {isOpen && (
-          <Calendar
-            onPreviousMonthClick={handlePreviousMonthClick}
-            onNextMonthClick={handleNextMonthClick}
-            onDaySelect={handleDaySelect}
-            date={date}
-            shortDate={getShortDate()}
-          />
-        )}
+        <Calendar
+          onPreviousMonthClick={handlePreviousMonthClick}
+          onNextMonthClick={handleNextMonthClick}
+          onDaySelect={handleDaySelect}
+          date={date}
+          shortDate={getShortDate()}
+          isVisible={isOpen}
+        />
       </div>
     </div>
   );

@@ -1,18 +1,40 @@
-import React from "react";
+import { ValidationErrorItem } from "joi";
+import React, { FC, MouseEvent } from "react";
+import { IInvoiceItem } from "../interfaces/interface";
 import styles from "../styles/InvoiceForm.module.scss";
 import Item from "./Item";
 
-const ItemList = ({ items, onDeleteItem, onAddItem, onChangeItemInfo }) => {
+interface ItemListProps {
+  items: Array<IInvoiceItem>;
+  onDeleteItem: (item: IInvoiceItem) => void;
+  onAddItem: (e: MouseEvent<HTMLButtonElement>) => void;
+  onChangeItemInfo: (
+    propertyName: string,
+    value: string | number,
+    item: IInvoiceItem
+  ) => void;
+  errors: Array<ValidationErrorItem>;
+}
+
+const ItemList: FC<ItemListProps> = ({
+  items,
+  onDeleteItem,
+  onAddItem,
+  onChangeItemInfo,
+  errors,
+}) => {
   return (
     <React.Fragment>
       <h4 className={styles.itemListHeading}>Item List</h4>
       <ul className={styles.itemList}>
-        {items?.map((item) => {
+        {items?.map((item, index) => {
           return (
             <Item
               item={item}
               onDeleteItem={onDeleteItem}
               onChangeItemInfo={onChangeItemInfo}
+              groupIndex={index}
+              errors={errors}
             />
           );
         })}
@@ -20,7 +42,6 @@ const ItemList = ({ items, onDeleteItem, onAddItem, onChangeItemInfo }) => {
       <button className={styles.newItemBtn} onClick={onAddItem}>
         + Add New Item
       </button>
-      <span className={styles.validationError}>- All fields must be added</span>
     </React.Fragment>
   );
 };

@@ -2,8 +2,16 @@ import styles from "../styles/Home.module.scss";
 import Filter from "./Filter";
 import NewInvoiceBtn from "./NewInvoiceBtn";
 import filters from "../data/filters";
+import { FC } from "react";
 
-const HomeHeader = ({
+interface HomeHeaderProps {
+  numOfInvoices: number;
+  selectedFilter: string;
+  onNewInvoiceClick: () => void;
+  onFilterClick: (newFilter: string) => void;
+}
+
+const HomeHeader: FC<HomeHeaderProps> = ({
   numOfInvoices,
   selectedFilter,
   onNewInvoiceClick,

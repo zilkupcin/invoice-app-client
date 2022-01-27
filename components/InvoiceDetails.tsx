@@ -1,13 +1,26 @@
 import styles from "../styles/InvoiceDetails.module.scss";
 import cn from "classnames";
 import Button from "./Button";
+import { LoaderContext } from "./LoaderProvider";
+import { FC, useContext } from "react";
+import { ACTION_MARK_AS_PAID, ACTION_DELETE_INVOICE } from "../data/constants";
+import { IInvoice } from "../interfaces/interface";
 
-const InvoiceDetails = ({
+interface InvoiceDetailsProps {
+  invoice: IInvoice;
+  onEditClick: () => void;
+  onDeleteClick: () => void;
+  onMarkAsPaidClick: () => void;
+}
+
+const InvoiceDetails: FC<InvoiceDetailsProps> = ({
   invoice,
   onEditClick,
   onDeleteClick,
   onMarkAsPaidClick,
 }) => {
+  const { isLoading } = useContext(LoaderContext);
+
   const calculatePaymentDate = () => {
     const days = parseInt(invoice.paymentTerms.replace("net_", ""));
     let newDate = new Date(invoice.date);
@@ -22,7 +35,7 @@ const InvoiceDetails = ({
   };
 
   const calculateGrandTotal = () => {
-    return invoice.items.reduce((total, item) => {
+    return invoice.items?.reduce((total, item) => {
       return item.price + total;
     }, 0);
   };
@@ -34,16 +47,22 @@ const InvoiceDetails = ({
           <span className={styles.statusLabel}>Status</span>
           <div
             className={cn(styles.status, {
-              [styles[invoice?.status]]: invoice?.status,
+              [styles[invoice.status]]: invoice.status,
             })}
           >
-            {invoice.status[0].toUpperCase() + invoice.status.substring(1)}
+            {invoice.status[0].toUpperCase() + invoice.status?.substring(1)}
           </div>
         </div>
         <div className={styles.actions}>
           <Button type="tertiary" title="Edit" onClick={onEditClick} />
-          <Button type="secondary" title="Delete" onClick={onDeleteClick} />
           <Button
+            type="secondary"
+            title="Delete"
+            isLoading={isLoading(ACTION_DELETE_INVOICE, true)}
+            onClick={onDeleteClick}
+          />
+          <Button
+            isLoading={isLoading(ACTION_MARK_AS_PAID, true)}
             type="primary"
             title="Mark as Paid"
             onClick={onMarkAsPaidClick}
@@ -55,7 +74,8 @@ const InvoiceDetails = ({
         <div className={styles.detailsTop}>
           <div className={styles.summary}>
             <h4 className={styles.id}>
-              <span>#</span>XM9141
+              <span>#</span>
+              {invoice._id?.substr(18)}
             </h4>
             <span className={styles.type}>{invoice.projectDescription}</span>
           </div>
@@ -118,7 +138,7 @@ const InvoiceDetails = ({
               <span>Total</span>
             </div>
             <ul>
-              {invoice.items.map((item) => {
+              {invoice.items?.map((item) => {
                 return (
                   <li className={styles.item}>
                     <h4 className={styles.itemName}>{item.name}</h4>
@@ -132,7 +152,7 @@ const InvoiceDetails = ({
                   </li>
                 );
               })}
-              {invoice.items.length === 0 && (
+              {invoice.items?.length === 0 && (
                 <p className={styles.itemListEmpty}>
                   There are no items added in this invoice
                 </p>
@@ -141,7 +161,7 @@ const InvoiceDetails = ({
             <div className={styles.totalContainer}>
               <span className={styles.totalLabel}>Grand Total</span>
               <span className={styles.totalValue}>
-                £ {calculateGrandTotal().toFixed(2)}
+                £ {calculateGrandTotal()?.toFixed(2)}
               </span>
             </div>
           </div>

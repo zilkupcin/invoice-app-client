@@ -1,6 +1,12 @@
+import { FC } from "react";
 import styles from "../styles/Forms.module.scss";
 
-const DropdownItem = ({ item, onOptionSelect }) => {
+interface DropdownItemProps {
+  item: Object;
+  onOptionSelect: (value: string) => void;
+}
+
+const DropdownItem: FC<DropdownItemProps> = ({ item, onOptionSelect }) => {
   const handleOptionSelect = () => {
     onOptionSelect(item.value);
   };

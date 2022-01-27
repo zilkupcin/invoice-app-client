@@ -1,20 +1,34 @@
-import React, { useState } from "react";
+import React, { FC, ReactNode, useState } from "react";
 
-export const LoaderContext = React.createContext();
+interface ILoaderContext {
+  isLoading: (actionId: string, ignoreInitial?: boolean) => boolean;
+  addActionId: (actionId: string) => void;
+  removeActionId: (actionId: string) => void;
+}
 
-function LoaderProvider({ children }) {
-  const [loader, setLoader] = useState({});
+export const LoaderContext = React.createContext<ILoaderContext | Object>({});
 
-  const isLoading = (actionId) => {
-    console.log(loader[actionId] === undefined || loader[actionId]);
-    return loader[actionId] === undefined || loader[actionId];
+interface LoaderProviderProps {
+  children: ReactNode;
+}
+
+const LoaderProvider: FC<LoaderProviderProps> = ({ children }) => {
+  interface ILoader {
+    [key: string]: boolean;
+  }
+  const [loader, setLoader] = useState<ILoader>({});
+
+  const isLoading = (actionId: string, ignoreInitial?: boolean): boolean => {
+    return ignoreInitial
+      ? loader[actionId] === true
+      : loader[actionId] === undefined || loader[actionId];
   };
 
-  const addActionId = (actionId) => {
+  const addActionId = (actionId: string) => {
     setLoader({ ...loader, [actionId]: true });
   };
 
-  const removeActionId = (actionId) => {
+  const removeActionId = (actionId: string) => {
     setLoader({ ...loader, [actionId]: false });
   };
 
@@ -23,6 +37,6 @@ function LoaderProvider({ children }) {
       {children}
     </LoaderContext.Provider>
   );
-}
+};
 
 export default LoaderProvider;

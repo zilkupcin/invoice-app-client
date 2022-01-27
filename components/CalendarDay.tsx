@@ -1,6 +1,12 @@
+import { FC } from "react";
 import styles from "../styles/Calendar.module.scss";
 
-const CalendarDay = ({ day, onDaySelect }) => {
+interface CalendarDayProps {
+  day: number;
+  onDaySelect: Function;
+}
+
+const CalendarDay: FC<CalendarDayProps> = ({ day, onDaySelect }) => {
   const handleDaySelect = () => {
     onDaySelect(day);
   };

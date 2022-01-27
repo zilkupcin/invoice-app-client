@@ -1,7 +1,12 @@
 import { useRouter } from "next/router";
+import { FC } from "react";
 import styles from "../styles/Navigation.module.scss";
 
-const GoBack = ({ onBackClick }) => {
+interface GoBackProps {
+  onBackClick?: () => void;
+}
+
+const GoBack: FC<GoBackProps> = ({ onBackClick }) => {
   const router = useRouter();
 
   const handleGoBack = () => {

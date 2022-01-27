@@ -1,17 +1,43 @@
+import { ValidationErrorItem } from "joi";
+import { FC, MouseEvent, MouseEventHandler } from "react";
+import { IInvoiceItem } from "../interfaces/interface";
 import styles from "../styles/InvoiceForm.module.scss";
 import InputField from "./InputField";
 
-const Item = ({ item, onDeleteItem, onChangeItemInfo }) => {
+interface ItemProps {
+  item: IInvoiceItem;
+  onDeleteItem: (item: IInvoiceItem) => void;
+  onChangeItemInfo: (
+    propertyName: string,
+    value: string | number,
+    item: IInvoiceItem
+  ) => void;
+  errors: Array<ValidationErrorItem>;
+  groupIndex: number;
+}
+
+const Item: FC<ItemProps> = ({
+  item,
+  onDeleteItem,
+  onChangeItemInfo,
+  errors,
+  groupIndex,
+}) => {
   const calculateTotal = () => {
     return item.price * item.quantity;
   };
 
-  const handleItemDelete = (e) => {
+  const handleItemDelete: MouseEventHandler<HTMLButtonElement> = (
+    e: MouseEvent<HTMLButtonElement>
+  ) => {
     e.preventDefault();
     onDeleteItem(item);
   };
 
-  const handleChangeItemInfo = (propertyName, value) => {
+  const handleChangeItemInfo = (
+    propertyName: string,
+    value: string | number
+  ) => {
     onChangeItemInfo(propertyName, value, item);
   };
 
@@ -22,6 +48,9 @@ const Item = ({ item, onDeleteItem, onChangeItemInfo }) => {
         label="Item Name"
         value={item.name}
         propertyName="name"
+        groupKey="items"
+        groupIndex={groupIndex}
+        errors={errors}
         onInputChange={handleChangeItemInfo}
       />
       <div className={styles.itemFieldGroup}>
@@ -30,6 +59,9 @@ const Item = ({ item, onDeleteItem, onChangeItemInfo }) => {
           label="Quantity"
           value={item.quantity}
           propertyName="quantity"
+          groupKey="items"
+          groupIndex={groupIndex}
+          errors={errors}
           onInputChange={handleChangeItemInfo}
         />
         <InputField
@@ -37,6 +69,9 @@ const Item = ({ item, onDeleteItem, onChangeItemInfo }) => {
           label="Price"
           value={item.price}
           propertyName="price"
+          groupKey="items"
+          groupIndex={groupIndex}
+          errors={errors}
           onInputChange={handleChangeItemInfo}
         />
         <div className={styles.itemTotal}>

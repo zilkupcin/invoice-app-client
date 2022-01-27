@@ -1,7 +1,18 @@
 import styles from "../styles/Filter.module.scss";
 import cn from "classnames";
+import { FC } from "react";
 
-const FilterItem = ({ filter, onFilterClick, selected }) => {
+interface FilterItemProps {
+  filter: string;
+  onFilterClick: (filter: string) => void;
+  selected: boolean;
+}
+
+const FilterItem: FC<FilterItemProps> = ({
+  filter,
+  onFilterClick,
+  selected,
+}) => {
   const handleFilterSelect = () => {
     onFilterClick(filter);
   };

@@ -6,33 +6,37 @@ import HomeHeader from "../components/HomeHeader";
 import InvoiceList from "../components/InvoiceList";
 import React, { useContext, useEffect, useState } from "react";
 import InvoiceForm from "../components/InvoiceForm";
-import { ACTION_LOAD_INVOICES, API_URL } from "../data/constants";
+import {
+  ACTION_LOAD_INVOICES,
+  ACTION_NEW_INVOICE,
+  ACTION_SAVE_AS_DRAFT,
+  API_URL,
+} from "../data/constants";
 import { LoaderContext } from "../components/LoaderProvider";
+import { invoiceValidation, itemValidation } from "../validation/validation";
+import Overlay from "../components/Overlay";
+import { getAllInvoices, addInvoice } from "../api/invoiceApi";
+import { IInvoice } from "../interfaces/interface";
+import { ValidationErrorItem } from "joi";
 
 const Home: NextPage = () => {
   const { addActionId, removeActionId } = useContext(LoaderContext);
-  const [invoices, setInvoices] = useState([]);
-  const [filter, setFilter] = useState();
+  const [invoices, setInvoices] = useState<Array<IInvoice>>([]);
+  const [filter, setFilter] = useState("");
   const [isNewInvoiceMode, setIsNewInvoiceMode] = useState(false);
+  const [errors, setErrors] = useState<Array<ValidationErrorItem>>([]);
 
   const getInvoices = async () => {
     addActionId(ACTION_LOAD_INVOICES);
 
     try {
-      const response = await fetch(`${API_URL}/api/invoices/`, {
-        headers: new Headers({
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("invoice_app_token"),
-        }),
-      });
-      const data = await response.json();
+      const data = await getAllInvoices();
       setInvoices(data);
-
-      removeActionId(ACTION_LOAD_INVOICES);
     } catch (e) {
       console.log(e);
     }
+
+    removeActionId(ACTION_LOAD_INVOICES);
   };
 
   const handleNewInvoiceClick = () => {
@@ -40,10 +44,11 @@ const Home: NextPage = () => {
   };
 
   const handleCancelClick = () => {
+    setErrors([]);
     setIsNewInvoiceMode(!isNewInvoiceMode);
   };
 
-  const handleFilterClick = (newFilter) => {
+  const handleFilterClick = (newFilter: string) => {
     if (newFilter === filter) {
       setFilter("");
     } else {
@@ -51,37 +56,53 @@ const Home: NextPage = () => {
     }
   };
 
-  const handleSaveInvoice = async (invoiceData, saveAsDraft) => {
+  const handleErrorsReset = () => {
+    setErrors([]);
+  };
+
+  const handleSaveInvoice = async (
+    invoiceData: IInvoice,
+    saveAsDraft: boolean
+  ) => {
     if (saveAsDraft) {
       invoiceData.status = "draft";
+      addActionId(ACTION_SAVE_AS_DRAFT);
     } else {
       invoiceData.status = "pending";
+      addActionId(ACTION_NEW_INVOICE);
+    }
+
+    const validationData = invoiceValidation(invoiceData);
+    // console.log(invoiceValidation(invoiceData));
+    if (validationData.error) {
+      setErrors(validationData.error.details);
+      removeActionId(ACTION_NEW_INVOICE);
+      return;
     }
 
     try {
-      const response = await fetch(`${API_URL}/api/invoices/add`, {
-        method: "POST",
-        headers: new Headers({
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("invoice_app_token"),
-        }),
-        body: JSON.stringify(invoiceData),
-      });
+      const response = await addInvoice(invoiceData);
 
       if (response.status === 200) {
-        // setInvoice({ ...invoiceData });
         setIsNewInvoiceMode(false);
         getInvoices();
       }
     } catch (e) {
       console.log(e);
     }
+
+    if (saveAsDraft) {
+      removeActionId(ACTION_SAVE_AS_DRAFT);
+    } else {
+      removeActionId(ACTION_NEW_INVOICE);
+    }
   };
 
   useEffect(() => {
     getInvoices();
   }, []);
+
+  console.log(errors);
 
   return (
     <React.Fragment>
@@ -96,16 +117,19 @@ const Home: NextPage = () => {
           !filter
             ? invoices
             : invoices.filter(
-                (invoice) => invoice.status === filter.toLowerCase()
+                (invoice: IInvoice) => invoice.status === filter.toLowerCase()
               )
         }
       />
-      {isNewInvoiceMode && (
+      <Overlay onClick={handleCancelClick} isVisible={isNewInvoiceMode}>
         <InvoiceForm
+          errors={errors}
           onSaveChanges={handleSaveInvoice}
           onCancelClick={handleCancelClick}
+          onErrorsReset={handleErrorsReset}
+          isVisible={isNewInvoiceMode}
         />
-      )}
+      </Overlay>
     </React.Fragment>
   );
 };
