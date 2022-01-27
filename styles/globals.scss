@@ -105,13 +105,13 @@ nav,
 section {
   display: block;
 }
+
 body {
   font-family: "Spartan", sans-serif;
   font-weight: 500;
   line-height: 15px;
   font-size: 12px;
   letter-spacing: -0.25;
-  background-color: #f8f8fb;
 }
 ol,
 ul {
@@ -166,4 +166,9 @@ h4 {
 button {
   font-family: "Spartan", sans-serif;
   border: none;
+}
+
+input {
+  font-family: "Spartan", sans-serif;
+  font-size: 12px;
 }

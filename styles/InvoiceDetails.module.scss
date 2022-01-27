@@ -1,10 +1,14 @@
-@import "./variables.scss";
-
 .pageContainer {
   position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
+
+  .footer {
+    button {
+      min-width: auto;
+    }
+  }
 }
 
 .container {
@@ -14,8 +18,8 @@
 
   .header {
     padding: 24px;
-    box-shadow: $box-shadow;
-    background-color: white;
+    box-shadow: var(--box-shadow);
+    background-color: var(--light);
     border-radius: 6px;
     margin-bottom: 24px;
 
@@ -25,7 +29,7 @@
       align-items: center;
 
       .statusLabel {
-        color: $light-three;
+        color: var(--light-three);
         font-size: 14px;
       }
     }
@@ -59,12 +63,12 @@
 
   .details {
     padding: 24px;
-    background-color: white;
-    box-shadow: $box-shadow;
+    background-color: var(--light);
+    box-shadow: var(--box-shadow);
     border-radius: 6px;
 
     .detailsTop {
-      color: $light-three;
+      color: var(--light-three);
       margin-bottom: 32px;
 
       .summary {
@@ -75,11 +79,12 @@
         .id {
           font-weight: 700;
           font-size: 14px;
-          color: black;
+          color: var(--dark);
           margin-bottom: 12px;
+          text-transform: uppercase;
 
           span {
-            color: $light-three;
+            color: var(--light-three);
           }
         }
 
@@ -119,6 +124,7 @@
         .detailsGroup {
           display: flex;
           flex-direction: column;
+          line-height: 1.2;
 
           &.detailsGroup--invoice-date {
             grid-area: date;
@@ -138,19 +144,20 @@
 
           .groupLabel {
             margin-bottom: 12px;
-            color: $light-three;
+            color: var(--light-three);
             font-size: 12px;
           }
 
           .groupValue {
             font-weight: 700;
             font-size: 18px;
+            color: var(--dark);
           }
         }
       }
 
       .itemSummary {
-        background-color: #f9fafe;
+        background-color: var(--light-one);
         border-radius: 6px;
         overflow: hidden;
 
@@ -170,45 +177,49 @@
             grid-area: name;
             font-size: 12px;
             margin-bottom: 8px;
+            color: var(--dark);
           }
 
           .itemCount {
             grid-area: count;
-            color: $light-three;
+            color: var(--light-three);
           }
 
           .itemCost {
             grid-area: cost;
-            color: $light-three;
+            color: var(--light-three);
           }
 
           .itemTotal {
             grid-area: total;
             align-self: center;
+            color: var(--dark);
           }
         }
 
         .totalContainer {
           display: flex;
           justify-content: space-between;
-          background-color: $dark-four;
+          background-color: var(--dark-four);
           padding: 24px;
-          color: white;
+          color: var(--light);
           margin-top: 24px;
 
           .totalLabel {
+            color: white;
           }
 
           .totalValue {
             font-size: 16px;
             font-weight: 700;
+            color: white;
           }
         }
 
         .itemListEmpty {
           text-align: center;
           font-size: 14px;
-          color: $light-three;
+          color: var(--light-three);
           margin: 24px 24px 0 24px;
         }
       }
@@ -238,7 +249,7 @@
             padding: 24px 24px 0 24px;
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
-            color: $light-three;
+            color: var(--light-three);
           }
 
           .item {
@@ -295,11 +306,11 @@
 }
 
 .draft {
-  color: $dark-four;
-  background-color: $light-one;
+  color: var(--dark);
+  background-color: var(--light-one);
 
   &::before {
-    background-color: $dark-four;
+    background-color: var(--dark);
   }
 }
 
@@ -312,7 +323,11 @@
   right: 0;
   padding: 24px;
   column-gap: 4px;
-  background-color: white;
+  background-color: var(--light);
+
+  * {
+    min-width: auto;
+  }
 
   @media only screen and (min-width: 375px) {
     * {

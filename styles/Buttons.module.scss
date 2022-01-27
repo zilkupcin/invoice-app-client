@@ -1,52 +1,76 @@
-@import "./variables.scss";
-
 .newInvoiceBtn {
+  position: relative;
   display: flex;
   align-items: center;
-  padding: 8px 24px 8px 8px;
-  background-color: $accent-primary;
+  padding: 8px 24px 8px 54px;
+  background-color: var(--accent-primary);
   border-radius: 50px;
-  color: #fff;
   cursor: pointer;
+  color: white;
+  height: 52px;
+  width: 110px;
   font-weight: 700;
+  transition: all 0.2s ease-in-out;
 
   img {
+    position: absolute;
+    left: 8px;
     padding: 12px;
-    background-color: #fff;
+    background-color: white;
     border-radius: 50%;
     width: 12px;
     margin-right: 12px;
+    transition: all 0.2s ease-in-out;
+    transform: rotate(0);
+  }
+
+  &:hover {
+    padding-left: 16px;
+    opacity: 0.9;
+
+    img {
+      left: 64px;
+      transform: rotate(360deg);
+    }
   }
 }
 
 .button {
   padding: 12px 24px;
-  color: white;
+  color: var(--light);
   border-radius: 24px;
   font-size: 10px;
   font-weight: 700;
   cursor: pointer;
+  min-width: 100px;
   transition: all 0.2s ease-in-out;
+  height: 44px;
+
+  &:disabled {
+    opacity: 0.7;
+  }
 
   &.button--primary {
-    background-color: $accent-primary;
+    background-color: var(--accent-primary);
+    color: white;
 
     &:hover {
-      background-color: $accent-primary-lighter;
+      background-color: var(--accent-primary-lighter);
     }
   }
 
   &.button--secondary {
-    background-color: $accent-secondary;
+    background-color: var(--accent-secondary);
+    color: white;
 
     &:hover {
-      background-color: $accent-secondary-lighter;
+      background-color: var(--accent-secondary-lighter);
     }
   }
 
   &.button--tertiary {
-    background-color: #f9fafe;
-    color: $light-three;
+    background-color: var(--light-one);
+    color: var(--light-three);
 
     &:hover {
       color: white;

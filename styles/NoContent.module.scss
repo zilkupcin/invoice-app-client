@@ -1,5 +1,3 @@
-@import "./variables.scss";
-
 .noContent {
   display: flex;
   justify-content: center;
@@ -20,7 +18,7 @@
 
   p {
     text-align: center;
-    color: $light-three;
+    color: var(--light-three);
 
     b {
       font-weight: 700;

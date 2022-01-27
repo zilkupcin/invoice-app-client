@@ -1,13 +1,11 @@
-@import "./variables.scss";
-
 .container {
   position: absolute;
   top: calc(100% + 32px);
   left: 0;
   right: 0;
   padding: 24px;
-  background-color: white;
-  box-shadow: $box-shadow-strong;
+  background-color: var(--light);
+  box-shadow: var(--box-shadow-strong);
   z-index: 50;
   border-radius: 8px;
 
@@ -40,7 +38,7 @@
       margin: 0 auto;
 
       &:hover {
-        color: $accent-primary;
+        color: var(--accent-primary);
         cursor: pointer;
       }
     }

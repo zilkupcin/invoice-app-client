@@ -1,16 +1,17 @@
-@import "./variables.scss";
-
 .container {
   position: absolute;
-  left: -24px;
-  right: -24px;
-  top: -24px;
-  background-color: white;
+  left: 0;
+  top: 0;
+  background-color: var(--light-secondary);
   padding: 24px;
   padding-bottom: 120px;
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  z-index: 100;
+  margin-bottom: 80px;
+  bottom: 0;
+  scroll-behavior: smooth;
 
   &::-webkit-scrollbar {
     display: none;
@@ -18,18 +19,19 @@
 
   .title {
     margin-bottom: 24px;
+    color: var(--dark);
 
     span {
-      color: $light-three;
+      color: var(--light-three);
       span {
-        color: #000;
+        color: var(--dark);
       }
     }
   }
 
   .groupLabel {
     display: block;
-    color: $accent-primary;
+    color: var(--accent-primary);
     font-weight: 700;
     font-size: 14px;
     margin-bottom: 24px;
@@ -58,10 +60,10 @@
   .formFooter {
     position: fixed;
     left: 0;
-    right: 0;
     bottom: 0;
-    background-color: white;
-    box-shadow: $box-shadow-strong;
+    right: 0;
+    background-color: var(--light-secondary);
+    box-shadow: var(--box-shadow-strong);
     padding: 24px;
     display: flex;
     justify-content: flex-end;
@@ -77,7 +79,6 @@
     bottom: 0;
     left: 0;
     border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
     z-index: 200;
     padding: 48px;
 
@@ -87,7 +88,7 @@
     }
 
     .formFooter {
-      left: 90px;
+      // left: 90px;
       width: 640px;
       box-sizing: border-box;
       border-bottom-right-radius: 20px;
@@ -96,7 +97,11 @@
 
   @media only screen and (min-width: 1024px) {
     top: 0;
-    left: 90px;
+    margin-left: 90px;
+
+    .formFooter {
+      margin-left: 90px;
+    }
   }
 }
 
@@ -109,23 +114,26 @@
 }
 
 .newItemBtn {
-  background-color: #f9fafe;
+  background-color: var(--light-one);
+  color: var(--light-three);
   border-radius: 48px;
   padding: 16px 24px;
   width: 100%;
   transition: all 0.2s ease-in-out;
   font-weight: 700;
-  color: $accent-primary-light;
+  // color: var(--accent-primary-light);
   cursor: pointer;
   margin-bottom: 24px;
 
   &:hover {
-    background-color: $light-two;
+    background-color: var(--light-two);
   }
 }
 
 .validationError {
-  color: $accent-secondary;
+  display: block;
+  margin-bottom: 4px;
+  color: var(--accent-secondary);
   font-weight: 700;
 }
 
@@ -140,7 +148,7 @@
     }
 
     .itemTotal {
-      color: $light-three;
+      color: var(--light-three);
 
       label {
         display: block;

@@ -1,11 +1,9 @@
-@import "./variables.scss";
-
 .sidebar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  background-color: $dark-four;
+  background-color: var(--dark-four);
   overflow: hidden;
   padding-right: 24px;
   box-sizing: border-box;
@@ -16,7 +14,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $accent-primary;
+  background-color: var(--accent-primary);
   padding: 24px;
   overflow: hidden;
   border-bottom-right-radius: 18px;
@@ -25,7 +23,7 @@
   &::after {
     position: absolute;
     content: "";
-    background-color: $accent-primary-lighter;
+    background-color: var(--accent-primary-lighter);
     width: 100%;
     height: 100px;
     top: 50%;
@@ -41,6 +39,47 @@
 .sidebarBottom {
   display: flex;
   align-items: center;
+
+  .themeSelector {
+    position: relative;
+    cursor: pointer;
+
+    .darkModeSelector {
+      position: absolute;
+      opacity: 1;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .lightModeSelector {
+      transform: translateY(30px);
+      opacity: 0;
+      transition: all 0.2s ease-in-out;
+    }
+
+    &:hover {
+      .darkModeSelector {
+        transform: translateY(-6px);
+      }
+    }
+
+    &.themeSelector--dark {
+      .darkModeSelector {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+
+      .lightModeSelector {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      &:hover {
+        .lightModeSelector {
+          transform: translateY(-6px);
+        }
+      }
+    }
+  }
 }
 
 .sidebarDivider {
@@ -52,12 +91,15 @@
 
 @media only screen and (min-width: 1024px) {
   .sidebar {
+    position: fixed;
+    height: 100vh;
     flex-direction: column;
     width: 90px;
     padding-right: 0;
     padding-bottom: 24px;
     border-top-right-radius: 18px;
     border-bottom-right-radius: 18px;
+    z-index: 100;
   }
 
   .sidebarBottom {

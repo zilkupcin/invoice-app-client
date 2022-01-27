@@ -1,9 +1,9 @@
-@import "./variables.scss";
-
 .page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: var(--light-one);
+  transition: all 0.2s ease-in-out;
 }
 
 .content {
@@ -28,10 +28,11 @@
   .headerLeft {
     h1 {
       font-size: 18px;
+      color: var(--dark);
     }
 
     span {
-      color: $light-three;
+      color: var(--light-three);
     }
   }
 
