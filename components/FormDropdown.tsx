@@ -1,12 +1,32 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import styles from "../styles/Forms.module.scss";
 import cn from "classnames";
 import DropdownItem from "./DropdownItem";
+import { useTransition, animated } from "react-spring";
+import { dropdownTransition } from "../transitions/transitions";
+import { ValidationErrorItem } from "joi";
+import { IDropdownOption } from "../interfaces/interface";
 
-const FormDropdown = ({ onInputChange, propertyName, items, value }) => {
+interface FormDropdownProps {
+  onInputChange: (propertyName: string, value: string) => void;
+  propertyName: string;
+  items: Array<IDropdownOption>;
+  value: string | undefined;
+  errors: Array<ValidationErrorItem>;
+}
+
+const FormDropdown: FC<FormDropdownProps> = ({
+  onInputChange,
+  propertyName,
+  items,
+  value,
+  errors,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleOptionSelect = (value) => {
+  const transitions = useTransition(isOpen, dropdownTransition);
+
+  const handleOptionSelect = (value: string) => {
     onInputChange(propertyName, value);
   };
 
@@ -23,18 +43,21 @@ const FormDropdown = ({ onInputChange, propertyName, items, value }) => {
       >
         <span className={styles.selectedOption}>{value}</span>
         <img src="/arrow.svg" />
-        {isOpen && (
-          <ul className={styles.options}>
-            {items.map((item) => {
-              return (
-                <DropdownItem
-                  key={item.id}
-                  onOptionSelect={handleOptionSelect}
-                  item={item}
-                />
-              );
-            })}
-          </ul>
+        {transitions(
+          (springStyles, dropdown) =>
+            dropdown && (
+              <animated.ul style={springStyles} className={styles.options}>
+                {items.map((item) => {
+                  return (
+                    <DropdownItem
+                      key={item.id}
+                      onOptionSelect={handleOptionSelect}
+                      item={item}
+                    />
+                  );
+                })}
+              </animated.ul>
+            )
         )}
       </div>
     </div>
