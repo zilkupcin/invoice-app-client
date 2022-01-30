@@ -61,20 +61,19 @@ export const deleteInvoiceById = async (invoiceId) => {
   return response;
 };
 
-export const markAsPaidById = async (data, invoiceId) => {
+export const markAsPaidById = async (invoiceId) => {
   const headers = new Headers({
     Accept: "application/json",
     "Content-Type": "application/json",
     "auth-token": localStorage.getItem("invoice_app_token"),
   });
 
-  const response = await fetch(`${endpoint}invoices/edit/${invoiceId}`, {
-    method: "POST",
+  const response = await fetch(`${endpoint}invoices/paid/${invoiceId}`, {
     headers: headers,
-    body: JSON.stringify(data),
   });
 
-  return response;
+  const data = await response.json();
+  return data;
 };
 
 export const editInvoiceById = async (data, invoiceId) => {
@@ -91,4 +90,10 @@ export const editInvoiceById = async (data, invoiceId) => {
   });
 
   return response;
+};
+
+export const demoLogin = async () => {
+  const response = await fetch(`${endpoint}user/demo`);
+  const data = await response.json();
+  return data;
 };
