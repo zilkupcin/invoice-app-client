@@ -12,12 +12,14 @@ import {
   ACTION_SAVE_AS_DRAFT,
   API_URL,
 } from "../data/constants";
+import { availableFilterOptions } from "../data/fieldOptions";
 import { LoaderContext } from "../components/LoaderProvider";
-import { invoiceValidation, itemValidation } from "../validation/validation";
+import { invoiceValidation } from "../validation/validation";
 import Overlay from "../components/Overlay";
-import { getAllInvoices, addInvoice } from "../api/invoiceApi";
+import { getAllInvoices, addInvoice, demoLogin } from "../api/invoiceApi";
 import { IInvoice } from "../interfaces/interface";
 import { ValidationErrorItem } from "joi";
+import { MessagesContext } from "../components/MessagesProvider";
 
 const Home: NextPage = () => {
   const { addActionId, removeActionId } = useContext(LoaderContext);
@@ -26,6 +28,9 @@ const Home: NextPage = () => {
   const [isNewInvoiceMode, setIsNewInvoiceMode] = useState(false);
   const [errors, setErrors] = useState<Array<ValidationErrorItem>>([]);
 
+  const { addMessage } = useContext(MessagesContext);
+
+  // Get all user's invoices
   const getInvoices = async () => {
     addActionId(ACTION_LOAD_INVOICES);
 
@@ -33,7 +38,7 @@ const Home: NextPage = () => {
       const data = await getAllInvoices();
       setInvoices(data);
     } catch (e) {
-      console.log(e);
+      addMessage(e);
     }
 
     removeActionId(ACTION_LOAD_INVOICES);
@@ -70,14 +75,14 @@ const Home: NextPage = () => {
     } else {
       invoiceData.status = "pending";
       addActionId(ACTION_NEW_INVOICE);
-    }
 
-    const validationData = invoiceValidation(invoiceData);
-    // console.log(invoiceValidation(invoiceData));
-    if (validationData.error) {
-      setErrors(validationData.error.details);
-      removeActionId(ACTION_NEW_INVOICE);
-      return;
+      // Validate user input
+      const validationData = invoiceValidation(invoiceData);
+      if (validationData.error) {
+        setErrors(validationData.error.details);
+        removeActionId(ACTION_NEW_INVOICE);
+        return;
+      }
     }
 
     try {
@@ -88,7 +93,7 @@ const Home: NextPage = () => {
         getInvoices();
       }
     } catch (e) {
-      console.log(e);
+      addMessage(e);
     }
 
     if (saveAsDraft) {
@@ -98,11 +103,23 @@ const Home: NextPage = () => {
     }
   };
 
-  useEffect(() => {
-    getInvoices();
-  }, []);
+  // Log into a demo account
+  const logIn = async () => {
+    const response = await demoLogin();
 
-  console.log(errors);
+    // Save the JWT token in local storage
+    localStorage.setItem("invoice_app_token", response.token);
+    getInvoices();
+  };
+
+  useEffect(() => {
+    // Check if the user is logged in, load all of their invoices
+    if (localStorage.getItem("invoice_app_token")) {
+      getInvoices();
+    } else {
+      logIn();
+    }
+  }, []);
 
   return (
     <React.Fragment>

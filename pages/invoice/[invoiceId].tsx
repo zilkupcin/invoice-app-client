@@ -27,31 +27,37 @@ import {
 } from "../../api/invoiceApi";
 import { ValidationErrorItem } from "joi";
 import { IInvoice } from "../../interfaces/interface";
+import { MessagesContext } from "../../components/MessagesProvider";
 
 const Invoice: NextPage = () => {
   const router = useRouter();
   const { invoiceId } = router.query;
 
   const { isLoading, addActionId, removeActionId } = useContext(LoaderContext);
+  const { addMessage } = useContext(MessagesContext);
   const [invoice, setInvoice] = useState<IInvoice>({
     paymentTerms: "net_1",
     date: new Date(),
     items: [],
   });
+
   const [errors, setErrors] = useState<Array<ValidationErrorItem>>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
 
+  // Get the invoice by id
   const getInvoice = async () => {
+    // Show a loader in the middle of the page
     addActionId(ACTION_LOAD_INVOICE);
 
     try {
       const data = await getInvoiceById(invoiceId);
       setInvoice(data);
 
+      // Hide loader
       removeActionId(ACTION_LOAD_INVOICE);
     } catch (e) {
-      console.log(e);
+      addMessage(e);
     }
   };
 
@@ -60,15 +66,17 @@ const Invoice: NextPage = () => {
   };
 
   const handleDeleteInvoice = async () => {
+    // Show a loader inside the delete button
     addActionId(ACTION_DELETE_INVOICE);
     try {
       const response = await deleteInvoiceById(invoiceId);
 
       if (response.status === 200) {
+        addMessage("Invoice deleted");
         router.back();
       }
     } catch (e) {
-      console.log(e);
+      addMessage(e);
     }
     removeActionId(ACTION_DELETE_INVOICE);
   };
@@ -84,17 +92,12 @@ const Invoice: NextPage = () => {
 
   const handleMarkAsPaidClick = async () => {
     addActionId(ACTION_MARK_AS_PAID);
-
-    const data = { status: "paid" };
-
     try {
-      const response = await markAsPaidById(data, invoiceId);
-
-      if (response.status === 200) {
-        setInvoice({ ...invoice, status: "paid" });
-      }
+      await markAsPaidById(invoiceId);
+      addMessage("Marked invoice as paid");
+      setInvoice({ ...invoice, status: "paid" });
     } catch (e) {
-      console.log(e);
+      addMessage(e);
     }
 
     removeActionId(ACTION_MARK_AS_PAID);
@@ -103,6 +106,7 @@ const Invoice: NextPage = () => {
   const handleSaveChangesClick = async (invoiceData: IInvoice) => {
     addActionId(ACTION_SAVE_CHANGES);
 
+    // Validate user input
     const validationData = invoiceValidation(invoiceData);
     if (validationData.error) {
       setErrors(validationData.error.details);
@@ -118,7 +122,7 @@ const Invoice: NextPage = () => {
         setIsEditMode(false);
       }
     } catch (e) {
-      console.log(e);
+      setErrors(e);
     }
 
     removeActionId(ACTION_SAVE_CHANGES);
@@ -154,7 +158,7 @@ const Invoice: NextPage = () => {
     );
   };
 
-  if (isLoading(ACTION_LOAD_INVOICE) || !invoice)
+  if (isLoading(ACTION_LOAD_INVOICE) || !invoice._id)
     return (
       <div className={styles.pageContainer}>
         <Loader />

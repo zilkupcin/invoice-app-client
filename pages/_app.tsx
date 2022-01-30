@@ -7,6 +7,8 @@ import styles from "../styles/Home.module.scss";
 import LoaderProvider from "../components/LoaderProvider";
 import { useState } from "react";
 import cn from "classnames";
+import MessagesProvider from "../components/MessagesProvider";
+import Messages from "../components/Messages";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState("light");
@@ -18,6 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div className={cn(styles.page, { [themeStyles[theme]]: true })}>
       <Head>
+        <link rel="shortcut icon" href="/images/favicon.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com"></link>
         <link
           rel="preconnect"
@@ -31,9 +34,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <Sidebar onThemeSwitch={handleThemeSwitch} theme={theme} />
       <section className={styles.content}>
-        <LoaderProvider>
-          <Component {...pageProps} />
-        </LoaderProvider>
+        <MessagesProvider>
+          <LoaderProvider>
+            <Component {...pageProps} />
+          </LoaderProvider>
+          <Messages />
+        </MessagesProvider>
       </section>
     </div>
   );
