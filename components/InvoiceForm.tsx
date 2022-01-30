@@ -60,6 +60,7 @@ const InvoiceForm: FC<InvoiceFormProps> = ({
     propertyName: string,
     value: string | number | Date
   ) => {
+    // Clear all the errors so user doesn't see them anymore
     if (errors) onErrorsReset();
     setInvoiceData({ ...invoiceData, [propertyName]: value });
   };
@@ -71,12 +72,16 @@ const InvoiceForm: FC<InvoiceFormProps> = ({
   ) => {
     if (errors) onErrorsReset();
 
-    const newItems = [...invoiceData.items];
+    const dataCopy = { ...invoiceData, items: [...invoiceData.items] };
+
     const itemIndex: number | undefined = invoiceData.items?.indexOf(item);
 
-    newItems[itemIndex || 0][propertyName] = value;
+    dataCopy.items[itemIndex] = {
+      ...dataCopy.items[itemIndex],
+      [propertyName]: value,
+    };
 
-    setInvoiceData({ ...invoiceData, items: [...newItems] });
+    setInvoiceData({ ...dataCopy });
   };
 
   const handleAddItem: MouseEventHandler<HTMLButtonElement> = (
@@ -84,7 +89,9 @@ const InvoiceForm: FC<InvoiceFormProps> = ({
   ) => {
     e.preventDefault();
     const newItems = invoiceData.items ? [...invoiceData.items] : [];
-    newItems.push({ name: "", quantity: 1, price: 123 });
+
+    // Push a new invoice item with some defaults
+    newItems.push({ name: "", quantity: 1, price: 5 });
     setInvoiceData({ ...invoiceData, items: [...newItems] });
   };
 
@@ -95,7 +102,6 @@ const InvoiceForm: FC<InvoiceFormProps> = ({
   };
 
   const handleCancelClick = () => {
-    setInvoiceData({});
     onCancelClick();
   };
 
@@ -108,38 +114,11 @@ const InvoiceForm: FC<InvoiceFormProps> = ({
   };
 
   useEffect(() => {
-    if (errors) {
+    // If there are any errors, scroll to the bottom of the form
+    if (errors.length > 0) {
       formContainer.current.scrollTo(0, 1000);
     }
   }, [errors]);
-
-  useEffect(() => {
-    if (!data) {
-      setInvoiceData({
-        streetAddress: "test street",
-        city: "London",
-        postCode: "E1 111",
-        country: "United Kingdom",
-        clientName: "My Client",
-        clientEmail: "client@example.com",
-        clientStreetAddress: "Client Street",
-        clientCity: "Manchester",
-        clientPostCode: "MN1 2MM",
-        clientCountry: "United Kingdom",
-        date: new Date(),
-        paymentTerms: "net_14",
-        projectDescription: "Default Project",
-        status: "draft",
-        items: [
-          {
-            name: "Banner Design",
-            quantity: 1,
-            price: 500.5,
-          },
-        ],
-      });
-    }
-  }, []);
 
   return transitions(
     (springStyles, item) =>
@@ -282,8 +261,10 @@ const InvoiceForm: FC<InvoiceFormProps> = ({
               items={invoiceData?.items}
             />
           </form>
-          {errors?.map((error) => (
-            <span className={styles.validationError}>- {error.message}</span>
+          {errors?.map((error, index) => (
+            <span key={index} className={styles.validationError}>
+              - {error.message}
+            </span>
           ))}
           <animated.div style={springStyles} className={styles.formFooter}>
             <Button
