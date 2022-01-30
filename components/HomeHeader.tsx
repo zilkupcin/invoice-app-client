@@ -1,7 +1,7 @@
 import styles from "../styles/Home.module.scss";
 import Filter from "./Filter";
 import NewInvoiceBtn from "./NewInvoiceBtn";
-import filters from "../data/filters";
+import { availableFilterOptions } from "../data/fieldOptions";
 import { FC } from "react";
 
 interface HomeHeaderProps {
@@ -26,7 +26,7 @@ const HomeHeader: FC<HomeHeaderProps> = ({
       <div className={styles.headerRight}>
         <Filter
           onFilterClick={onFilterClick}
-          filters={filters}
+          filters={availableFilterOptions}
           selectedFilter={selectedFilter}
         ></Filter>
         <NewInvoiceBtn onClick={onNewInvoiceClick}></NewInvoiceBtn>
