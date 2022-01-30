@@ -1,0 +1,65 @@
+.container {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  .messageList {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .message {
+    position: relative;
+    padding: 12px 32px;
+    font-size: 14px;
+    background-color: var(--light-one);
+    box-shadow: 0px 0px 50px 0 rgba(0, 0, 0, 0.15);
+    margin-bottom: 8px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    color: var(--dark);
+    transform: translateX(100%);
+    opacity: 0;
+    animation-name: animated-message;
+    animation-duration: 3s;
+    animation-direction: normal;
+
+    @keyframes animated-message {
+      0% {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+
+      15% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+
+      85% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    }
+
+    &::before {
+      position: absolute;
+      content: "";
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 12px;
+      background-color: var(--accent-primary);
+    }
+
+    @media only screen and (min-width: 480px) {
+      font-size: 14px;
+      padding: 18px 24px;
+    }
+  }
+}
