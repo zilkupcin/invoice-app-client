@@ -39,6 +39,7 @@ const Filter: FC<FilterProps> = ({
               {filters.map((filter) => {
                 return (
                   <FilterItem
+                    key={filter.id}
                     onFilterClick={onFilterClick}
                     filter={filter}
                     selected={filter === selectedFilter}
