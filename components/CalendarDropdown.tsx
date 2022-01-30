@@ -21,7 +21,6 @@ const CalendarDropdown: FC<CalendarDropdownProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [date, setDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(value);
 
   const handleDropdownClick: MouseEventHandler<HTMLDivElement> = (
     e: MouseEvent
@@ -55,10 +54,10 @@ const CalendarDropdown: FC<CalendarDropdownProps> = ({
     newDate = new Date(newDate);
 
     onInputChange(propertyName, newDate);
-    setSelectedDate(newDate);
     setIsOpen(false);
   };
 
+  // Format a short date to display as an input value
   const getShortDate = () => {
     const month = date.toLocaleString("en-us", {
       month: "short",
@@ -67,6 +66,7 @@ const CalendarDropdown: FC<CalendarDropdownProps> = ({
     return `${month} ${date.getFullYear()}`;
   };
 
+  // Format a short date to display as a selected value
   const getShortSelectedDate = () => {
     const dateToFormat = value;
     const month = dateToFormat.toLocaleString("en-us", {
