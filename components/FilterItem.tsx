@@ -14,7 +14,7 @@ const FilterItem: FC<FilterItemProps> = ({
   selected,
 }) => {
   const handleFilterSelect = () => {
-    onFilterClick(filter);
+    onFilterClick(filter.value);
   };
 
   return (
@@ -26,7 +26,7 @@ const FilterItem: FC<FilterItemProps> = ({
       >
         {selected && <img src="./check.svg" />}
       </div>
-      {filter}
+      {filter.label}
     </li>
   );
 };
