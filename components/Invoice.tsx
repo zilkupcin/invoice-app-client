@@ -11,6 +11,7 @@ interface InvoiceProps {
 const Invoice: FC<InvoiceProps> = ({ invoice }) => {
   const router = useRouter();
 
+  // Calculate a date by adding a payment term to the invoice date
   const calculatePaymentDate = () => {
     const days = parseInt(invoice.paymentTerms.replace("net_", ""));
     let newDate = new Date(invoice.date);
@@ -24,10 +25,12 @@ const Invoice: FC<InvoiceProps> = ({ invoice }) => {
     });
   };
 
+  // Go to a specific invoice's page
   const handleViewInvoice = () => {
     router.push(`/invoice/${invoice._id}`);
   };
 
+  // Sum up all items in the invoice
   const calculateGrandTotal = () => {
     return invoice.items
       ?.reduce((total, item) => {
@@ -41,7 +44,7 @@ const Invoice: FC<InvoiceProps> = ({ invoice }) => {
         <span>#</span>
         {invoice._id?.substr(18)}
       </h4>
-      <span className={styles.name}>{invoice.clientName}</span>
+      <span className={styles.name}>{invoice.clientName || "-"}</span>
       <div className={styles.priceContainer}>
         <span className={styles.date}>Due {calculatePaymentDate()}</span>
         <span className={styles.price}>£ {calculateGrandTotal()}</span>

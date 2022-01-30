@@ -21,6 +21,7 @@ const InvoiceDetails: FC<InvoiceDetailsProps> = ({
 }) => {
   const { isLoading } = useContext(LoaderContext);
 
+  // Calculate a date by adding a payment term to the invoice date
   const calculatePaymentDate = () => {
     const days = parseInt(invoice.paymentTerms.replace("net_", ""));
     let newDate = new Date(invoice.date);
@@ -36,7 +37,7 @@ const InvoiceDetails: FC<InvoiceDetailsProps> = ({
 
   const calculateGrandTotal = () => {
     return invoice.items?.reduce((total, item) => {
-      return item.price + total;
+      return item.price * item.quantity + total;
     }, 0);
   };
 
@@ -77,13 +78,15 @@ const InvoiceDetails: FC<InvoiceDetailsProps> = ({
               <span>#</span>
               {invoice._id?.substr(18)}
             </h4>
-            <span className={styles.type}>{invoice.projectDescription}</span>
+            <span className={styles.type}>
+              {invoice.projectDescription || "-"}
+            </span>
           </div>
           <div className={styles.address}>
-            <span>{invoice.streetAddress}</span>
-            <span>{invoice.city}</span>
-            <span>{invoice.postCode}</span>
-            <span>{invoice.country}</span>
+            <span>{invoice.streetAddress || "-"}</span>
+            <span>{invoice.city || "-"}</span>
+            <span>{invoice.postCode || "-"}</span>
+            <span>{invoice.country || "-"}</span>
           </div>
         </div>
         <div className={styles.detailsMiddle}>
@@ -94,7 +97,7 @@ const InvoiceDetails: FC<InvoiceDetailsProps> = ({
               })}
             >
               <span className={styles.groupLabel}>Invoice Date</span>
-              <span className={styles.groupValue}>
+              <span className={styles.groupValue || "-"}>
                 {new Date(invoice.date).toLocaleString("en-GB", {
                   timeZone: "UTC",
                   year: "numeric",
@@ -109,7 +112,9 @@ const InvoiceDetails: FC<InvoiceDetailsProps> = ({
               })}
             >
               <span className={styles.groupLabel}>Bill To</span>
-              <span className={styles.groupValue}>{invoice.clientName}</span>
+              <span className={styles.groupValue}>
+                {invoice.clientName || "-"}
+              </span>
             </div>
             <div
               className={cn(styles.detailsGroup, {
@@ -127,7 +132,9 @@ const InvoiceDetails: FC<InvoiceDetailsProps> = ({
               })}
             >
               <span className={styles.groupLabel}>Sent to</span>
-              <span className={styles.groupValue}>{invoice.clientEmail}</span>
+              <span className={styles.groupValue}>
+                {invoice.clientEmail || "-"}
+              </span>
             </div>
           </div>
           <div className={styles.itemSummary}>
@@ -140,11 +147,11 @@ const InvoiceDetails: FC<InvoiceDetailsProps> = ({
             <ul>
               {invoice.items?.map((item) => {
                 return (
-                  <li className={styles.item}>
+                  <li key={item._id} className={styles.item}>
                     <h4 className={styles.itemName}>{item.name}</h4>
                     <span className={styles.itemCount}>{item.quantity}</span>
                     <span className={styles.itemCost}>
-                      £ {item.price.toFixed(2)}
+                      £ {parseFloat(item.price).toFixed(2)}
                     </span>
                     <span className={styles.itemTotal}>
                       £ {(item.price * item.quantity).toFixed(2)}

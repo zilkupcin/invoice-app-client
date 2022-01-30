@@ -30,6 +30,7 @@ const ItemList: FC<ItemListProps> = ({
         {items?.map((item, index) => {
           return (
             <Item
+              key={item._id || index}
               item={item}
               onDeleteItem={onDeleteItem}
               onChangeItemInfo={onChangeItemInfo}

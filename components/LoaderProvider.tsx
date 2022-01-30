@@ -24,10 +24,16 @@ const LoaderProvider: FC<LoaderProviderProps> = ({ children }) => {
       : loader[actionId] === undefined || loader[actionId];
   };
 
+  // Adds an actionId to the loader object as a property
+  // this way we can keep track which actions are still loading
+  // and which ones aren't
   const addActionId = (actionId: string) => {
     setLoader({ ...loader, [actionId]: true });
   };
 
+  // Remove an actionId from the loader object
+  // this indicated that the action has been completed
+  // and we shouldn't show any loaders for this action
   const removeActionId = (actionId: string) => {
     setLoader({ ...loader, [actionId]: false });
   };

@@ -10,6 +10,7 @@ const GoBack: FC<GoBackProps> = ({ onBackClick }) => {
   const router = useRouter();
 
   const handleGoBack = () => {
+    // Check if we have a custom function that's been passed
     if (onBackClick) {
       onBackClick();
     } else {
