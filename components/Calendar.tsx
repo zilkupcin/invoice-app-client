@@ -24,6 +24,7 @@ const Calendar: FC<CalendarProps> = ({
   const transitions = useTransition(isVisible, dropdownTransition);
 
   const getDays = () => {
+    // Get how many days there are in a month
     const daysInMonth = new Date(
       date.getFullYear(),
       date.getMonth() + 1,
@@ -32,8 +33,11 @@ const Calendar: FC<CalendarProps> = ({
 
     let dayList = [];
 
+    // Create day components
     for (let i = 0; i < daysInMonth; i++) {
-      dayList.push(<CalendarDay day={i + 1} onDaySelect={onDaySelect} />);
+      dayList.push(
+        <CalendarDay key={i} day={i + 1} onDaySelect={onDaySelect} />
+      );
     }
 
     return dayList;
