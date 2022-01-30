@@ -22,12 +22,14 @@ button {
   .loader {
     width: 16px;
     height: 16px;
+    margin: 0;
 
     div {
       width: 16px;
       height: 16px;
       margin: 2px;
       border-width: 2px;
+      border-color: var(--light) transparent transparent transparent;
     }
   }
 }
