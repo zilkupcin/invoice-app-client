@@ -1,4 +1,4 @@
-const endpoint = "http://localhost:5000/api/";
+const endpoint = "https://invoice-app-zil.herokuapp.com/api/";
 
 export const getAllInvoices = async () => {
   const headers = new Headers({
